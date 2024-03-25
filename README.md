@@ -15,3 +15,7 @@ The following link (https://www.kaggle.com/code/pythonafroz/solar-power-generati
 # Result
 
 Our result is to predict the energy consumption of solar power generation to understand how much stored energy is required during predicted peak/non-solar periods. We will use plots, and graphs. To analyze the results, we will use efficiency calculations or accuracy based on learning and do a comparison. To obtain results, we will use statistical tests to see the difference between energy and solar power.
+
+# In the future (something to investigate)
+
+...
