@@ -4,7 +4,9 @@ After analyzing and discussing a variety of potential machine-learning tasks, we
 
 # Datasets
 
-https://www.kaggle.com/code/robikscube/time-series-forecasting-with-machine-learning-yt/notebook. If we need more datasets, we will investigate The 60 Best Free Datasets for Machine Learning | iMerit.
+https://www.kaggle.com/code/robikscube/time-series-forecasting-with-machine-learning-yt/notebook
+https://www.kaggle.com/datasets/willianoliveiragibin/capital-energy/data
+If we need more datasets, we will investigate The 60 Best Free Datasets for Machine Learning | iMerit.
 
 # Reading 
 
