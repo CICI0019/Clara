@@ -7,6 +7,7 @@ After analyzing and discussing a variety of potential machine-learning tasks, we
 1. https://www.kaggle.com/code/robikscube/time-series-forecasting-with-machine-learning-yt/notebook
 2. https://www.kaggle.com/datasets/willianoliveiragibin/capital-energy/data
 3. https://www.kaggle.com/datasets/sazidthe1/global-electricity-production/data
+4. https://dkasolarcentre.com.au/download?location=alice-springs
 
 If we need more datasets, we will investigate The 60 Best Free Datasets for Machine Learning | iMerit.
 
