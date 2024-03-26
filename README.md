@@ -4,18 +4,18 @@ After analyzing and discussing a variety of potential machine-learning tasks, we
 
 # Datasets
 
-https://www.kaggle.com/code/robikscube/time-series-forecasting-with-machine-learning-yt/notebook
-https://www.kaggle.com/datasets/willianoliveiragibin/capital-energy/data
-https://www.kaggle.com/datasets/sazidthe1/global-electricity-production/data
+1. https://www.kaggle.com/code/robikscube/time-series-forecasting-with-machine-learning-yt/notebook
+2. https://www.kaggle.com/datasets/willianoliveiragibin/capital-energy/data
+3. https://www.kaggle.com/datasets/sazidthe1/global-electricity-production/data
 
 If we need more datasets, we will investigate The 60 Best Free Datasets for Machine Learning | iMerit.
 
 # Example
 
-https://github.com/pvlib/pvlib-python
-https://github.com/pingswept/pysolar
-https://pvlib-python.readthedocs.io/en/stable/user_guide/pvsystem.html
-https://pysolar.readthedocs.io/en/latest/#source-code-repository
+1. https://github.com/pvlib/pvlib-python
+2. https://github.com/pingswept/pysolar
+3. https://pvlib-python.readthedocs.io/en/stable/user_guide/pvsystem.html
+4. https://pysolar.readthedocs.io/en/latest/#source-code-repository
 
 # Background
 
