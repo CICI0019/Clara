@@ -17,6 +17,7 @@ If we need more datasets, we will investigate The 60 Best Free Datasets for Mach
 2. https://github.com/pingswept/pysolar
 3. https://pvlib-python.readthedocs.io/en/stable/user_guide/pvsystem.html
 4. https://pysolar.readthedocs.io/en/latest/#source-code-repository
+5. Real world data (https://ourworldindata.org/energy-production-consumption)
 
 # Background
 
