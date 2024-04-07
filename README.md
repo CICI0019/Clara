@@ -5,9 +5,10 @@ After analyzing and discussing a variety of potential machine-learning tasks, we
 # Datasets
 
 1. https://www.kaggle.com/code/robikscube/time-series-forecasting-with-machine-learning-yt/notebook
-2. https://www.kaggle.com/datasets/willianoliveiragibin/capital-energy/data
-3. https://www.kaggle.com/datasets/sazidthe1/global-electricity-production/data
-4. https://dkasolarcentre.com.au/download?location=alice-springs
+2. https://machinelearningmastery.com/how-to-develop-lstm-models-for-multi-step-time-series-forecasting-of-household-power-consumption/
+3. https://www.kaggle.com/datasets/willianoliveiragibin/capital-energy/data
+4. https://www.kaggle.com/datasets/sazidthe1/global-electricity-production/data
+5. https://dkasolarcentre.com.au/download?location=alice-springs
 
 If we need more datasets, we will investigate The 60 Best Free Datasets for Machine Learning | iMerit.
 
@@ -21,7 +22,7 @@ If we need more datasets, we will investigate The 60 Best Free Datasets for Mach
 
 # Background
 
-The following link (https://www.kaggle.com/code/pythonafroz/solar-power-generation-forecast-with-99-auc) is a great example to show by using machine learning we can predict solar power generation. We will also refer to Umapathy, P. (Ed.). (2023). Machine learning and internet of things in solar power generation (First edition.). CRC Press. https://doi.org/10.1201/9781003302964, along with Chakraborty, D., Mondal, J., Barua, H. B., & Bhattacharjee, A. (2023). Computational solar energy – Ensemble learning methods for prediction of solar power generation based on meteorological parameters in Eastern India. Renewable Energy Focus, 44, 277–294. https://doi.org/10.1016/j.ref.2023.01.006 . This journal for current and future advancements of machine learning and deep learning in renewable energy Benti, N.E.; Chaka, M.D.; Semie, A.G. Forecasting Renewable Energy Generation with Machine Learning and Deep Learning: Current Advances and Future Prospects. Sustainability 2023, 15, 7087. https://doi.org/10.3390/su15097087 
+The following link (https://www.kaggle.com/code/pythonafroz/solar-power-generation-forecast-with-99-auc) is a great example to show by using machine learning we can predict solar power generation. We will also refer to Umapathy, P. (Ed.). (2023). Machine learning and internet of things in solar power generation (First edition.). CRC Press. https://doi.org/10.1201/9781003302964, along with Chakraborty, D., Mondal, J., Barua, H. B., & Bhattacharjee, A. (2023). Computational solar energy – Ensemble learning methods for prediction of solar power generation based on meteorological parameters in Eastern India. Renewable Energy Focus, 44, 277–294. https://doi.org/10.1016/j.ref.2023.01.006 . This journal for current and future advancements of machine learning and deep learning in renewable energy Benti, N.E.; Chaka, M.D.; Semie, A.G. Forecasting Renewable Energy Generation with Machine Learning and Deep Learning: Current Advances and Future Prospects. Sustainability 2023, 15, 7087. https://doi.org/10.3390/su15097087. And https://machinelearningmastery.com/how-to-develop-lstm-models-for-multi-step-time-series-forecasting-of-household-power-consumption/
 
 # Result
 
