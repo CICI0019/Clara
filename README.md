@@ -9,6 +9,8 @@ After analyzing and discussing a variety of potential machine-learning tasks, we
 3. https://www.kaggle.com/datasets/willianoliveiragibin/capital-energy/data
 4. https://www.kaggle.com/datasets/sazidthe1/global-electricity-production/data
 5. https://dkasolarcentre.com.au/download?location=alice-springs
+6.  Real world data (https://ourworldindata.org/energy-production-consumption)
+7. https://ourworldindata.org/renewable-energy
 
 If we need more datasets, we will investigate The 60 Best Free Datasets for Machine Learning | iMerit.
 
@@ -18,8 +20,7 @@ If we need more datasets, we will investigate The 60 Best Free Datasets for Mach
 2. https://github.com/pingswept/pysolar
 3. https://pvlib-python.readthedocs.io/en/stable/user_guide/pvsystem.html
 4. https://pysolar.readthedocs.io/en/latest/#source-code-repository
-5. Real world data (https://ourworldindata.org/energy-production-consumption)
-6. https://github.com/iamirmasoud/energy_consumption_prediction/blob/master/Energy%20consumption%20prediction%20using%20LSTM-GRU%20in%20PyTorch.ipynb
+5. https://github.com/iamirmasoud/energy_consumption_prediction/blob/master/Energy%20consumption%20prediction%20using%20LSTM-GRU%20in%20PyTorch.ipynb
 
 # Background
 
