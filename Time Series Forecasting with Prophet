@@ -1,0 +1,313 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from pandas.api.types import CategoricalDtype
+from prophet import Prophet
+from sklearn.metrics import mean_squared_error
+
+
+color_pal = sns.color_palette()
+plt.style.use('fivethirtyeight')
+
+def mean_absoulte_percentage_error(y_true,y_pred):
+    y_true, y_pred= np.array(y_true),np.arrya(y_pred)
+    return np.mean(np.abs((y_true-y_pred)/y_true))*100
+
+# Read data and plot AEP
+df = pd.read_csv('AEP_hourly.csv')
+df = df.set_index('Datetime')
+df.index = pd.to_datetime(df.index)
+df.plot(style='.',
+        figsize=(15, 5),
+        color=color_pal[0],
+        title='AEP Energy Use MW')
+plt.show()
+
+# Feature Creation
+cat_type= CategoricalDtype(categories=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], ordered=True)
+
+def create_features(df, label=None):
+    """
+    Creates time series features from datetime index
+    """
+    
+    df= df.copy()
+    df['date']=df.index
+    df['hour']=df['date'].dt.hour
+    df['dayofweek']=df['date'].dt.dayofweek
+    df['weekday']=df['date'].dt.day_name()
+    df['weekday']=df['weekday'].astype(cat_type)
+    df['quarter']=df['date'].dt.quarter
+    df['month']=df['date'].dt.month
+    df['year']=df['date'].dt.year
+    df['dayofyear']=df['date'].dt.dayofyear
+    df['dayofmonth']=df['date'].dt.day
+    df['date_offset'] = (df.date.dt.month*100+df.date.dt.day -320)%1300
+    
+    df['season'] = pd.cut(df['date_offset'],[0,300,602,900,1300], labels=['Spring','Summer','Fall','Winter'])
+    
+    X=df[['hour','dayofweek','quarter','month','year','dayofyear','dayofmonth','weekday','season']]
+    
+    if label:
+        y=df[label]
+        return X,y
+    return X
+
+X,y = create_features(df,label='AEP_MW')
+features_and_target= pd.concat([X,y],axis=1)
+
+#print(features_and_target)
+
+fig, ax= plt.subplots(figsize=(10,5))
+sns.boxplot(data=features_and_target.dropna(),
+           x='weekday',
+           y='AEP_MW',
+           hue='season',
+           ax=ax,
+           linewidth=1)
+ax.set_title('Power use MW by Day of week')
+ax.set_xlabel('Day of Week')
+ax.set_ylabel('energy (MW)')
+ax.legend(bbox_to_anchor=(1,1))
+plt.show()
+
+# Train test split
+split_date='1-Jan-2015'
+aep_train=df.loc[df.index <= split_date].copy()
+aep_test = df.loc[df.index > split_date].copy()
+
+#plotting train and test
+aep_test.rename(columns={'AEP_MW': 'TEST SET'}) \
+        .join(aep_train.rename(columns={'AEP_MW':'TRAIN SET'}), how='outer')\
+        .plot(figsize=(10,5),title='AEP', style=".", ms=1)
+plt.show()
+
+#print(aep_train)
+#print(aep_test)
+
+aep_train=aep_train.reset_index().rename(columns={'Datetime':'ds','AEP_MW':'y'})
+
+p=Prophet()
+p.fit(aep_train)
+
+aep_test=aep_test.reset_index().rename(columns={'Datetime':'ds','AEP_MW':'y'})
+aep_test_fcst= p.predict(aep_test)
+
+fig,ax= plt.subplots(figsize=(10,5))
+fig= p.plot(aep_test_fcst,ax=ax)
+plt.show()
+
+fig= p.plot_components(aep_test_fcst)
+plt.show()
+
+# Compare forecast
+f,ax= plt.subplots(figsize=(15,5))
+ax.scatter(aep_test['ds'], aep_test['y'],color='r')
+fig=p.plot(aep_test_fcst,ax=ax)
+
+# Score (RMSE)
+rmse = np.sqrt(mean_squared_error(y_true=aep_test['y'],
+                            y_pred=aep_test_fcst['yhat']))
+print(f'Mean Squared Error AEP: {rmse:0.2f}')
+
+
+#NEW DATASET COMED
+
+# Read data and plot
+df = pd.read_csv('COMED_hourly.csv')
+df = df.set_index('Datetime')
+df.index = pd.to_datetime(df.index)
+df.plot(style='.',
+        figsize=(15, 5),
+        color=color_pal[0],
+        title='COMED Energy Use MW')
+plt.show()
+
+# Feature Creation
+cat_type= CategoricalDtype(categories=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], ordered=True)
+
+def create_features(df, label=None):
+    """
+    Creates time series features from datetime index
+    """
+    
+    df= df.copy()
+    df['date']=df.index
+    df['hour']=df['date'].dt.hour
+    df['dayofweek']=df['date'].dt.dayofweek
+    df['weekday']=df['date'].dt.day_name()
+    df['weekday']=df['weekday'].astype(cat_type)
+    df['quarter']=df['date'].dt.quarter
+    df['month']=df['date'].dt.month
+    df['year']=df['date'].dt.year
+    df['dayofyear']=df['date'].dt.dayofyear
+    df['dayofmonth']=df['date'].dt.day
+    df['date_offset'] = (df.date.dt.month*100+df.date.dt.day -320)%1300
+    
+    df['season'] = pd.cut(df['date_offset'],[0,300,602,900,1300], labels=['Spring','Summer','Fall','Winter'])
+    
+    X=df[['hour','dayofweek','quarter','month','year','dayofyear','dayofmonth','weekday','season']]
+    
+    if label:
+        y=df[label]
+        return X,y
+    return X
+
+X,y = create_features(df,label='COMED_MW')
+features_and_target= pd.concat([X,y],axis=1)
+
+#print(features_and_target)
+
+fig, ax= plt.subplots(figsize=(10,5))
+sns.boxplot(data=features_and_target.dropna(),
+           x='weekday',
+           y='COMED_MW',
+           hue='season',
+           ax=ax,
+           linewidth=1)
+ax.set_title('Power use MW by Day of week')
+ax.set_xlabel('Day of Week')
+ax.set_ylabel('energy (MW)')
+ax.legend(bbox_to_anchor=(1,1))
+plt.show()
+
+# Train test split
+split_date='1-Jan-2015'
+comed_train=df.loc[df.index <= split_date].copy()
+comed_test = df.loc[df.index > split_date].copy()
+
+#plotting train and test
+comed_test.rename(columns={'COMED_MW': 'TEST SET'}) \
+        .join(comed_train.rename(columns={'COMED_MW':'TRAIN SET'}), how='outer')\
+        .plot(figsize=(10,5),title='COMED', style=".", ms=1)
+plt.show()
+
+#print(comed_train)
+#print(comed_test)
+
+comed_train=comed_train.reset_index().rename(columns={'Datetime':'ds','COMED_MW':'y'})
+
+p=Prophet()
+p.fit(comed_train)
+
+comed_test=comed_test.reset_index().rename(columns={'Datetime':'ds','COMED_MW':'y'})
+comed_test_fcst= p.predict(comed_test)
+
+fig,ax= plt.subplots(figsize=(10,5))
+fig= p.plot(comed_test_fcst,ax=ax)
+plt.show()
+
+fig= p.plot_components(comed_test_fcst)
+plt.show()
+
+# Compare forecast
+f,ax= plt.subplots(figsize=(15,5))
+ax.scatter(comed_test['ds'], comed_test['y'],color='r')
+fig=p.plot(comed_test_fcst,ax=ax)
+
+# Score (RMSE)
+rmse = np.sqrt(mean_squared_error(y_true=comed_test['y'],
+                            y_pred=comed_test_fcst['yhat']))
+print(f'Mean Squared Error COMED: {rmse:0.2f}')
+
+
+#NEW DATASET DAYTON
+
+# Read data and plot
+df = pd.read_csv('DAYTON_hourly.csv')
+df = df.set_index('Datetime')
+df.index = pd.to_datetime(df.index)
+df.plot(style='.',
+        figsize=(15, 5),
+        color=color_pal[0],
+        title='DAYTON Energy Use MW')
+plt.show()
+
+# Feature Creation
+cat_type= CategoricalDtype(categories=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], ordered=True)
+
+def create_features(df, label=None):
+    """
+    Creates time series features from datetime index
+    """
+    
+    df= df.copy()
+    df['date']=df.index
+    df['hour']=df['date'].dt.hour
+    df['dayofweek']=df['date'].dt.dayofweek
+    df['weekday']=df['date'].dt.day_name()
+    df['weekday']=df['weekday'].astype(cat_type)
+    df['quarter']=df['date'].dt.quarter
+    df['month']=df['date'].dt.month
+    df['year']=df['date'].dt.year
+    df['dayofyear']=df['date'].dt.dayofyear
+    df['dayofmonth']=df['date'].dt.day
+    df['date_offset'] = (df.date.dt.month*100+df.date.dt.day -320)%1300
+    
+    df['season'] = pd.cut(df['date_offset'],[0,300,602,900,1300], labels=['Spring','Summer','Fall','Winter'])
+    
+    X=df[['hour','dayofweek','quarter','month','year','dayofyear','dayofmonth','weekday','season']]
+    
+    if label:
+        y=df[label]
+        return X,y
+    return X
+
+X,y = create_features(df,label='DAYTON_MW')
+features_and_target= pd.concat([X,y],axis=1)
+
+#print(features_and_target)
+
+fig, ax= plt.subplots(figsize=(10,5))
+sns.boxplot(data=features_and_target.dropna(),
+           x='weekday',
+           y='DAYTON_MW',
+           hue='season',
+           ax=ax,
+           linewidth=1)
+ax.set_title('Power use MW by Day of week')
+ax.set_xlabel('Day of Week')
+ax.set_ylabel('energy (MW)')
+ax.legend(bbox_to_anchor=(1,1))
+plt.show()
+
+# Train test split
+split_date='1-Jan-2015'
+dayton_train=df.loc[df.index <= split_date].copy()
+dayton_test = df.loc[df.index > split_date].copy()
+
+#plotting train and test
+dayton_test.rename(columns={'DAYTON_MW': 'TEST SET'}) \
+        .join(dayton_train.rename(columns={'DAYTON_MW':'TRAIN SET'}), how='outer')\
+        .plot(figsize=(10,5),title='DAYTON', style=".", ms=1)
+plt.show()
+
+#print(dayton_train)
+#print(dayton_test)
+
+dayton_train=dayton_train.reset_index().rename(columns={'Datetime':'ds','DAYTON_MW':'y'})
+
+p=Prophet()
+p.fit(dayton_train)
+
+dayton_test=dayton_test.reset_index().rename(columns={'Datetime':'ds','DAYTON_MW':'y'})
+dayton_test_fcst= p.predict(dayton_test)
+
+fig,ax= plt.subplots(figsize=(10,5))
+fig= p.plot(dayton_test_fcst,ax=ax)
+plt.show()
+
+fig= p.plot_components(dayton_test_fcst)
+plt.show()
+
+# Compare forecast
+f,ax= plt.subplots(figsize=(15,5))
+ax.scatter(dayton_test['ds'], dayton_test['y'],color='r')
+fig=p.plot(dayton_test_fcst,ax=ax)
+
+# Score (RMSE)
+rmse = np.sqrt(mean_squared_error(y_true=dayton_test['y'],
+                            y_pred=dayton_test_fcst['yhat']))
+print(f'Mean Squared Error DAYTON: {rmse:0.2f}')
